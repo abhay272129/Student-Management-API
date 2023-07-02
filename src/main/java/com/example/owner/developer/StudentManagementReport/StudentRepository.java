@@ -10,6 +10,9 @@ public class StudentRepository {
     Map<Integer, Student> studentsDB = new HashMap<>();//Db key->admnNo
 
     public Student getStudent(int admnNo) {
+        if(!studentsDB.containsKey(admnNo)){
+            throw new RuntimeException("Student doesn't exist");
+        }
         return studentsDB.get(admnNo);
     }
 
@@ -37,7 +40,7 @@ public class StudentRepository {
         if (!studentsDB.containsKey(admnNo)) {
             throw new RuntimeException("Student doesn't exist");
         }
-        Student student = studentsDB.get(admnNo);
+        Student student= studentsDB.get(admnNo);
         student.setCourse(newCourse);
         return student;
 

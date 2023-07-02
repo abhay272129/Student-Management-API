@@ -14,10 +14,23 @@ public class StudentController {
    @Autowired
     StudentService studentService;
 
-   @GetMapping("/get") //GetMapping messasge is the API endpoint
-   public Student getStudent(@RequestParam("id") int admnNo){//admnNo->request parameter
-        return studentService.getStudent(admnNo);
+
+//   @GetMapping("/get") //GetMapping messasge is the API endpoint
+//   public Student getStudent(@RequestParam("id") int admnNo){//admnNo->request parameter
+//
+//       return studentService.getStudent(admnNo);
+//    }
+
+    @GetMapping("/get")
+    public ResponseEntity getStudent(@RequestParam("id") int admnNo){
+       Student s=studentService.getStudent(admnNo);
+       if(s==null){
+           return new ResponseEntity("Student not found",HttpStatus.NOT_FOUND);
+       }
+       return new ResponseEntity(s,HttpStatus.ACCEPTED);
     }
+
+
 
     //Add a Student
 //    @PostMapping("/add")
@@ -31,6 +44,7 @@ public class StudentController {
         String s=studentService.addStudent(student);
         return new ResponseEntity(s, HttpStatus.CREATED);
     }
+
 
 
     @GetMapping("/get/{id}")
